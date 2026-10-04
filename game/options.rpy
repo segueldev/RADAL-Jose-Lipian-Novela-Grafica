@@ -113,7 +113,7 @@ define config.end_game_transition = None
 ##
 ## Una vez comenzado el juego, esto se puede ajustar con las sentencias "window
 ## show", "window hide", y "window auto". (El textbox se mantiene en los menús
-## gracias a config.choice_empty_window = True arriba.)
+## gracias a config.choice_empty_window = extend arriba.)
 
 
 ## Transiciones usadas para mostrar o esconder la ventana de diálogo
