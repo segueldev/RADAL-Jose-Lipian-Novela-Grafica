@@ -598,6 +598,9 @@ label prologo_temprano:
     fabian "Tempranísimo, wn. Ni los galgos estaban despiertos."
     $ v_fabian_intro = True
 
+    # Fin de la perrera: si quedan en pantalla, Marcelo y Pablo los tapan.
+    hide perro1
+    hide perro2
     call quejas_marcelo
     "A las 7:55, con el Megaficticias anunciando menos treinta grados, aparece un joven en short corto y gafas de sol."
     $ bg_prologo = "bg patio"

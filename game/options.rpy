@@ -17,8 +17,11 @@ define config.name = _("Radal")
 
 define config.main_menu_music = "audio/tema.mp3"
 
-## Mantener el cuadro de texto visible también durante las decisiones.
-define config.window = "auto_keep"
+## Mantener el cuadro de texto visible también durante las decisiones, para
+## que el borde recortado de los sprites nunca quede al descubierto.
+## Valor canónico de Ren'Py: 'extend' repite la última línea como pie del menú.
+## (Ojo: es una función, NO un booleano.)
+define config.choice_empty_window = extend
 
 
 ## Determina si el título dado más arriba se muestra en el menú principal.
@@ -109,7 +112,8 @@ define config.end_game_transition = None
 ## muestra de nuevo cuando hay diálogo que presentar.
 ##
 ## Una vez comenzado el juego, esto se puede ajustar con las sentencias "window
-## show", "window hide", y "window auto". (config.window = "auto_keep" arriba.)
+## show", "window hide", y "window auto". (El textbox se mantiene en los menús
+## gracias a config.choice_empty_window = True arriba.)
 
 
 ## Transiciones usadas para mostrar o esconder la ventana de diálogo
