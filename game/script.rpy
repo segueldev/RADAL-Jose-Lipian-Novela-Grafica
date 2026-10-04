@@ -105,6 +105,8 @@ default v_fabian_intro = False      # ya conociste a Fabián en el prólogo
 default v_pelea_inacapini = False   # Benjamín vs el Inacapini
 default whatif_inacapini_activo = False
 default v_inacapini = False
+default prologo = 0        # qué prólogo salió (1-5); se sorteaba solo con $
+default lugares = 0        # lugares visitados; se recalcula en cada vuelta al hub
 
 default persistent.finales = set()
 
