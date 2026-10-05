@@ -2638,6 +2638,7 @@ label creditos:
     "RADAL — la novela gráfica."
     "Creado por Benjamín Seguel."
     "Soundtrack original: «Josep Lipian Iceberg», escrita y producida por Fabián Millalén (Fabinho)."
+    "El logo del juego también lo hizo Fabián."
 
     "Y desde ese año, nadie ha dejado de molestar a José. Ni un solo día."
     "Has desbloqueado [n_finales] de 6 finales."
