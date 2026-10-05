@@ -115,6 +115,8 @@ define config.end_game_transition = None
 ## show", "window hide", y "window auto". (El textbox se mantiene en los menús
 ## gracias a config.choice_empty_window = extend arriba.)
 
+define config.window = "show"
+
 
 ## Transiciones usadas para mostrar o esconder la ventana de diálogo
 

@@ -119,13 +119,13 @@ init python:
         partes = [Solid(color)]
         if sub:
             partes.append(Text(texto, size=90, color="#ffffff", xalign=0.5,
-                               yalign=0.42, outlines=[(3, "#000000", 0, 0)]))
+                               yalign=0.14, outlines=[(3, "#000000", 0, 0)]))
             partes.append(Text(sub, size=46, italic=True, color="#ffffff",
-                               xalign=0.5, yalign=0.58,
+                               xalign=0.5, yalign=0.26,
                                outlines=[(2, "#000000", 0, 0)]))
         else:
             partes.append(Text(texto, size=90, color="#ffffff", xalign=0.5,
-                               yalign=0.5, outlines=[(3, "#000000", 0, 0)]))
+                               yalign=0.14, outlines=[(3, "#000000", 0, 0)]))
         return Fixed(*partes)
 
     def cover(fn, ancho=1920, alto=1080):
@@ -143,7 +143,7 @@ init python:
             Fixed(
                 Solid(color),
                 Text("» " + texto, size=60, color="#ffffff", xalign=0.5,
-                     yalign=0.5, outlines=[(3, "#000000", 0, 0)], text_align=0.5),
+                     yalign=0.15, outlines=[(3, "#000000", 0, 0)], text_align=0.5),
                 xsize=1820, ysize=1020, xalign=0.5, yalign=0.5))
 
     def placeholder(texto, color):
@@ -251,7 +251,7 @@ init python:
         # El clima de Temuco hoy (varía cada vez que vuelves al hub).
         return renpy.random.choice([
             "Día de lluvia en el INACAP. Lo normal.",
-            "Día de frío seco. Se te pelan los labios.",
+            "Tremendo frío. Habían unos calefactores en el comedor, pero los sacaron.",
             "Día de sol sospechoso. Todos desconfían.",
             "Día nublado. Ni frío ni calor. Fome.",
             "Día de viento. El Megaficticias lo llamó «brisa». Miente.",
@@ -309,13 +309,13 @@ image escena cerca_desayuno = cover("images/escena cerca_desayuno.png")
 image escena cumple = cover("images/escena cumple.png")
 image escena atardecer_cerca = cover("images/escena atardecer_cerca.png")
 image escena venta_camioneta = cover("images/escena venta_camioneta.png")
-image escena short = Transform("images/escena short.png", zoom=1.4)
+image escena short = Transform("images/escena short.png", zoom=2.0)
 
 # Fondo del menú principal
 image menu_bg = cover("images/menu.jpg")
 
 # Video de fondo: Pillalelbún inundado (sin sonido)
-image bg inundado = Movie(play="images/bg inundado.mp4", loop=True, audio=False, size=(1920, 1080))
+image bg inundado = Movie(play="images/bginundado.webm", loop=True, audio=False, size=(1920, 1080))
 
 # Fondos (borra cada línea cuando tengas la imagen real)
 image bg fundo    = fondo("Fundo El Carmen",     "#4a5d23")
@@ -340,6 +340,10 @@ image escena sueno_ruta = escena("Pablo corta la cinta de la Ruta de la Zanahori
 # ---------------------------------------------------------------------
 #  Aviso grande de consecuencias ("X lo recordará", fragmentos)
 # ---------------------------------------------------------------------
+transform bastian_bajo:
+    # Baja la foto de cuerpo completo para que la cabeza no quede en el cielo.
+    yoffset 160
+
 transform recuerda_appear:
     on show:
         alpha 0.0
@@ -439,11 +443,13 @@ label start:
 # ---------------------------------------------------------------------
 label encuentro_pablo:
 
-    show pablo at right with dissolve
-
+    # Primer plano del short: el Pablo normal queda fuera del encuadre
+    # durante el zoom (si no, se encima el plano cortado) y vuelve a la
+    # esquina cuando termina el enfoque.
     show escena short at center with dissolve
     mc "(¿Eso es... un short?)"
     hide escena short with dissolve
+    show pablo at right with dissolve
 
     pablo "Buenos días."
 
@@ -561,7 +567,7 @@ label prologo_tarde:
     "Temuco. Lunes. 8:47 de la mañana. Llegas tarde. El primer día. Excelente comienzo."
     "La clase ya empezó. Entras piola y buscas un puesto libre."
 
-    show bastian at center with dissolve
+    show bastian at center, bastian_bajo with dissolve
     "Un muchacho de complexión de gimnasio te señala uno. En silencio."
     mc "(¿Ese?)"
     "Asiente."
@@ -614,6 +620,18 @@ label prologo_temprano:
 # ---------------------------------------------------------------------
 label intro_grupo:
 
+    # Los prólogos dejan sprites en pantalla (Marcelo de quejas_marcelo,
+    # Pablo de encuentro_pablo, Fabián, Bastián y los perros). Se ocultan
+    # acá para que cada uno entre cuando le toca, sin quedar tapando a
+    # Fabián ni a Bastián al inicio del intro.
+    hide marcelo
+    hide pablo
+    hide fabian
+    hide bastian
+    hide perro1
+    hide perro2
+    with dissolve
+
     show diego at center with dissolve
 
     diego "Ojo, nuevo: yo salgo directo al Jumbo del Portal después de clases, a la sección Hasbro. Estoy juntando plata para un computador."
@@ -632,12 +650,12 @@ label intro_grupo:
     if not v_fabian_intro:
         show fabian at left with dissolve
         fabian "Y yo soy Fabián. De Pillalelbún. Aguante el Colo Colo."
-    show fabian at left
+    show fabian at left with dissolve
     "Fabián levanta el celular. Suena [cumbia_del_dia()]. En Temuco nadie escucha cumbia villera. A Fabián le da lo mismo."
 
     hide diego
     hide fabian
-    show bastian at left with dissolve
+    show bastian at left, bastian_bajo with dissolve
 
     "Al fondo, un muchacho de complexión de gimnasio saluda con la mano. No dice ni una palabra."
     "Se acerca otro muchacho a presentarlo. Este sí habla. Mucho."
@@ -669,6 +687,7 @@ label intro_grupo:
     mc "¿La nación?"
     benjamin "Fundo El Carmen. Está en Temuco, técnicamente. Pero económicamente... es otra cosa. Se ve mejor. Más nuevo. Prácticamente otro país."
     benjamin "Nosotros no decimos «voy a Temuco». Decimos «voy al extranjero»."
+    hide bastian
     show marcelo at left with dissolve
     marcelo "Qué lata. Nadie dice eso. Solo él. Siempre él."
     benjamin "Y siempre tendré la razón."
@@ -702,7 +721,11 @@ label intro_grupo:
             diego "El llamado del ejército. Te pueden llamar a los 18. Hay que sacárselo como sea."
             marcelo "Qué lata el llamado. Qué lata todo lo que empieza con «llamado»."
         "Bastante normal el Nico, ¿no?":
-            benjamin "El más normal del liceo. Por eso nadie habla de él. Es su superpoder."
+            benjamin "Dicen que es el más popular del liceo. Pero es falso."
+            benjamin "El wn siempre se quedaba dormido."
+            benjamin "Una vez trajo una frasada pa acomodarse en la silla, en la sala de clases."
+            benjamin "Al profe le dio lo mismo."
+            benjamin "El profe de después lo retó y le hizo sacar la frasada."
     benjamin "Aunque hablando de inscripciones al ejército, nadie tiene más historia que Diego."
     diego "No saquemos ese tema."
     marcelo "Diego también se inscribió. Lo rechazaron. Oye, no, qué mal."
@@ -738,6 +761,7 @@ label intro_grupo:
     mc "¿Dos millones?"
     diego "Del casino online. Los ganó. Y se evaporaron."
 
+    hide diego
     show marcelo at left with dissolve
     marcelo "Hablando de cosas importantes... cuéntenle de Shakira. Bucha."
     mc "¿Quién es Shakira?"
@@ -745,11 +769,14 @@ label intro_grupo:
 
     show benjamin at center with dissolve
     benjamin "No es una «quién». Es LA yegua de José."
+    hide pablo
     show diego at right with dissolve
     diego "Se llama Shakira. Sí. Shakira."
     marcelo "Le puso Shakira por la cantante. Por LA Shakira. Esa misma."
+    hide benjamin
     show fabian at center with dissolve
     fabian "La quiere harto. Demasiado, diría yo."
+    hide diego
     show benjamin at right with dissolve
     benjamin "Y la sube al Facebook. Sube fotos de su yegua al Facebook. Como quien sube fotos de su hijo."
     mc "¿Y eso es malo? Suena... sano."
@@ -765,32 +792,41 @@ label intro_grupo:
 
     jose "¿Están hablando de Shakira?"
     jose "Es mi yegua. La crié de bebé, desde que me la dieron. ¿Algún problema?"
+    hide diego
     show benjamin at left with dissolve
     benjamin "Ninguno, José. Ninguno. Eso es lo que nos preocupa."
 
-    show bastian at left with dissolve
+    hide benjamin
+    show bastian at left, bastian_bajo with dissolve
     "José se gira hacia Bastián, que está ahí. Siempre está ahí."
     jose "Tú me entiendes, ¿cierto, Bastián?"
     bastian "..."
     jose "Dice que sí."
     "Bastián asiente con la cabeza. José asiente de vuelta. Comunicación total."
+    hide bastian
     show benjamin at left with dissolve
     benjamin "José es el único que le habla a Bastián. Por eso Bastián solo le habla a José. Un ecosistema perfecto."
+    hide benjamin
     show diego at left with dissolve
 
     diego "Y no le hagan mucho caso a José: desde que se metió al Elysium se cree mejor que todos."
     jose "Se dice gimnasio. Y sí, voy. Alguien en este grupo tiene que cuidarse."
+    hide diego
     show benjamin at left with dissolve
     benjamin "Se le suben los humos. Llega con polera de entrenamiento. Sube historias en el espejo."
     jose "Es que claro, es disciplina. Ustedes no le saben."
     benjamin "Y Diego también se metió al Elysium, ¿cachai? Lo paga todos los meses."
     benjamin "No va nunca."
+    hide benjamin
     show diego at left with dissolve
     diego "Iba harto antes. Ahora estoy ocupado."
+    hide diego
     show marcelo at left with dissolve
     marcelo "Ocupado haciendo streams de Free Fire en TikTok. Qué lata."
+    hide marcelo
     show benjamin at left with dissolve
     benjamin "Se hace llamar «Ryu». Y a la gente le dice «cabezón»."
+    hide benjamin
     show diego at left with dissolve
     diego "Es que así se saluda en los lives. «¿Cabezón, cómo estai?». Es mi marca."
 
@@ -801,6 +837,7 @@ label intro_grupo:
             $ apoyo += 1
             $ recuerda("José")
             jose "Gracias, po. Al fin alguien con criterio."
+            hide diego
             show benjamin at left with dissolve
             benjamin "No le fomente. NO le fomente."
         "¿Le celebras el cumpleaños a una yegua?":
@@ -813,9 +850,11 @@ label intro_grupo:
             $ apoyo += 1
             $ recuerda("José")
             jose "Cuando quieras. Lincoñir queda cerca. Te la presento."
+            hide diego
             show benjamin at left with dissolve
             benjamin "Todos caen. Todos terminan queriendo conocer a la yegua."
 
+    hide diego
     show benjamin at left with dissolve
     "Mientras José habla de ella, Benjamín se acerca y te susurra:"
     benjamin "(bajito) Lo único raro: pregúntale cuánto vale la yegua."
@@ -1028,10 +1067,10 @@ label shell:
                 pablo "..."
 
     scene escena cisterna_pablo with dissolve
-    show pablo at center with dissolve
+    show pablo shell at center with dissolve
 
     "Pablo se sube a la cisterna y la recorre por el patio. Lento. Muy lento. Pero con cara de estar en una película."
-    pablo "Me toca cargar cisternas de cincuenta litros. Con respeto, eso sí."
+    pablo "Haría esto con short corto, pero me obligan a venir con uniforme. Eso sí, igual lo traigo en la mochila."
     pablo "Ayer arreglé un tablero de fusión trifásico para salvar la Shell. Pa que no se cayera el letrero."
     pablo "Y hoy, adivina: el letrero se cayó de todas formas. Loco nefasto."
     mc "Va como a cuatro por hora."
@@ -1052,9 +1091,9 @@ label shell:
         fabian "Pero tranqui: la cumbia y mi polola me tienen ocupado."
     else:
         mc "Fabián, ¿tú no estudias con ellos?"
-        fabian "Sí, po. Ciberseguridad. De momento."
-        "Ese «de momento» sonó raro. Nadie le dio importancia. Debieron."
-    fabian "Y acá en Pillalelbún se junta el mundo. Mi casa es la sede oficial."
+        fabian "Me metí este año al INACAP. Compré SushiBurger con la beca el otro día. Pero..."
+        "Ese «pero» sonó raro, pero no le di importancia."
+    fabian "Y acá en Pillalelbún vienen todos los culiaos. Mi casa parece evento de Rocket League."
     fabian "Lo más raro: Maxi y Benjamín viven al lado. AL LADO. Y solo se juntan acá. Ni ellos lo entienden."
 
     "Una jauría de galgos cruza corriendo por el patio. Van como cinco. Parecen manada de comercial."
@@ -1238,7 +1277,7 @@ label potrero1:
     benjamin "Es un anti-final, ¿cachai? Una amenaza pa que nunca la venda. Mientras exista la amenaza, Shakira está a salvo."
     benjamin "Es disuasión. Es cariño. Cariño disuasivo."
     jose "Está loco este. Como si yo fuera a venderla."
-    "José se ríe. Shakira relincha tranquila. Nadie toma la ley en serio. Nadie."
+    "José se ríe. Shakira relincha tranquila. Nadie se toma en serio la wea. Al final nadie, así que continúan."
 
     jump hub
 
@@ -1456,7 +1495,7 @@ label liceo:
     scene black with fade
     "Años antes. Sala de clases. El profe Martín escribe en la pizarra una sola palabra: HUAWEI."
 
-    scene escena martin_clase with fade
+    scene bg sala_liceo with fade
     show martin at center with dissolve
 
     martin "Cabros. Hoy no habrá clase. Hoy hablaremos de China."
@@ -1490,15 +1529,23 @@ label liceo:
     "En eso irrumpe un hombre con una cámara. Filma la clase como si fuera un documental de National Geographic."
 
     benjamin "Héctor. Amigo del profe. Todos le dicen el Suzuki Jeep."
+    hide benjamin
     show hector at right with dissolve
     hector "Este video va para mi canal. SJO. Suzuki Jeep Oficial. Y ese Jeep de afuera es mío."
 
-    show jeep at right with dissolve
+    hide marcelo
+    show martin at left with dissolve
+    show jeep at center with dissolve
     "El Jeep. Suzuki. Cuatro por cuatro. Estacionado como si fuera dueño del liceo."
     "Se cachiporrea de su Jeep. Es el noventa por ciento de su personalidad."
+    hide jeep
+    show martin at center with dissolve
+    show marcelo at left with dissolve
     marcelo "Tiene casi cuatro mil suscriptores. Qué lata. La gente no tiene criterio."
+    hide hector
     show benjamin at right with dissolve
     benjamin "Tres mil novecientos ochenta. Ciento doce videos. Todos del Jeep."
+    hide benjamin
     show hector at right with dissolve
     hector "Qué van a saber ustedes. No tienen un Suzuki Jeep."
     martin "¡RESPETO! ¡Héctor, filma esto!"
@@ -1509,6 +1556,7 @@ label liceo:
     "Y en cada mesa, cada muro y cada baño del liceo, la misma inscripción sagrada: «Iván Garrido del 4F»."
     martin "¡¿QUIÉN RAYA MIS MESAS?!"
     hector "Yo tengo una teoría: se rayó solo. Como los geoglifos. Nadie sabe cómo llegó ahí."
+    hide hector
     show benjamin at right with dissolve
     benjamin "Esos los hice yo. No es ningún secreto: lo rayé delante de todo el curso. De Iván incluido. Es mi obra maestra."
 
@@ -1607,6 +1655,7 @@ label inundacion:
     fabian "Ese es Maxi. De Pedro de Valdivia. Aparece cuando hay comida, conflicto o catástrofe."
     maxi "¡Conchetumare el agua! ¡Estoy hasta el copi, negro!"
 
+    hide pablo
     show ruben at right with dissolve
     "Rubén flota en su banca. Literalmente flota. No se ha movido. No piensa moverse."
     ruben "¿Y a ti qué te importa? El agua me lleva sola."
@@ -1628,6 +1677,7 @@ label inundacion:
             $ rel_delta("Fabián", -1)
             $ rel_delta("Maxi", -1)
             $ recuerda("Pablo", "Pablo lo recordará. Fabián y Maxi NO lo olvidarán.", puntos=0)
+            hide ruben
             show pablo at right with dissolve
             "Ayudas a Pablo a poner sacos. Él salva primero las gafas de sol. Después el surtidor. Después, si queda tiempo, la gente."
             pablo "Gracias. Brad Pitt también habría salvado las gafas primero."
@@ -1984,7 +2034,7 @@ label sueno_pablo:
 
     scene escena sueno_ruta with dissolve
     "Y Pablo, con short y gafas de sol, corta la cinta inaugural de la Ruta de la Zanahoria."
-    show pablo shell at center with dissolve
+    show pablo at center with dissolve
     pablo "Por fin... leceras productivas."
 
     $ musica("dramatica.ogg")
@@ -2323,7 +2373,7 @@ label final_verdadero:
         benjamin "(susurrando) ¿Vieron eso? ¿VIERON ESO?"
 
     if verdad_martin:
-        show bastian at center with dissolve
+        show bastian at center, bastian_bajo with dissolve
         bastian "Ni el Shen Shen en 'China' vio un desenlace así."
         "Silencio absoluto. Todos se giran hacia Bastián."
         show benjamin at left with dissolve
@@ -2479,7 +2529,7 @@ label final_gamer:
         "José volvió de Villarrica a los tres meses. Sin pareja. Con experiencia laboral. Nadie preguntó nada."
 
     if verdad_martin:
-        show bastian at left with dissolve
+        show bastian at left, bastian_bajo with dissolve
         bastian "Como decía el profe Martín: esto en China no pasa. Bueno, según él."
         show benjamin at right with dissolve
         benjamin "¿¡Habló Bastián!? ¡Pachoclo, hablaste!"
