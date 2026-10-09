@@ -52,5 +52,5 @@ screen say_pablo_imagina(who,what):
         at globo_pablo_flota(fase_globo_pablo)
         fixed:
             add GloboPablo(fase_globo_pablo)
-            text who id "who" xpos 125 ypos 55 size 19 color "#59706b"
-            text what id "what" xpos 80 ypos 90 xmaximum 495 size 27 color "#233632" line_spacing 3
+            text who id "who" xpos 125 ypos 55 size (27 if renpy.variant("small") else 19) color "#59706b"
+            text what id "what" xpos (125 if renpy.variant("small") else 80) ypos 90 xmaximum (420 if renpy.variant("small") else 495) size (32 if renpy.variant("small") else 27) color "#233632" line_spacing 3

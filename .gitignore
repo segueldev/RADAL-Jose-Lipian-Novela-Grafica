@@ -29,3 +29,9 @@
 /respaldo-*/
 /tests/
 /game/qa_*
+
+# Firma Android: conservar localmente, nunca publicar.
+*.keystore
+/local.properties
+/bundle.properties
+/android.dist/

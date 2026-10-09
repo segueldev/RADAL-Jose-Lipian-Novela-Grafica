@@ -2,7 +2,22 @@
 
 Novela visual chilena de SeguelStudios, hecha con Ren’Py 8.5.3.
 
+## Imágenes del juego
+
+La portada, el mapa y una misión del Portal Temuco, sin revelar los finales.
+
+![Menú principal de RADAL 1.2](docs/imagenes/menu-v1.2.png)
+
+![Mapa de viajes](docs/imagenes/mapa-v1.2.png)
+
+![Ayuda a Diego a reponer juguetes — interfaz Android](docs/imagenes/portal-v1.2.png)
+
 ## Jugar
+
+Descargas del [release v1.2](https://github.com/segueldev/RADAL-Jose-Lipian-Novela-Grafica/releases/tag/v1.2): Windows, Linux y ahora Android.
+
+**Android:** descarga [Radal-1.2-android.apk](https://github.com/segueldev/RADAL-Jose-Lipian-Novela-Grafica/releases/download/v1.2/Radal-1.2-android.apk), ábrelo en el celular y permite la instalación desde ese navegador o gestor si Android lo solicita. Android 5.0 o posterior; se juega en horizontal. Incluye el DLC Lucho. APK firmado y probado en simulación táctil; pendiente de prueba en un celular físico.
+
 
 Abre el proyecto con Ren’Py o extrae la descarga Linux y ejecuta `Radal.sh`, o extrae la descarga Windows y abre `Radal.exe`. Pulsa **Comenzar** para probar los comienzos nuevos. El DLC **Lucho** se abre desde el menú principal.
 
