@@ -1,4 +1,4 @@
-﻿## Este archivo contiene opciones que pueden cambiarse para personalizar el
+## Este archivo contiene opciones que pueden cambiarse para personalizar el
 ## juego.
 ##
 ## Las líneas que empiezan con doble '#' son comentarios, no deben ser
@@ -15,7 +15,8 @@
 
 define config.name = _("Radal")
 
-define config.main_menu_music = "audio/tema.mp3"
+define config.main_menu_music = "audio/fabian/josep_lofi_lipian.ogg"
+define config.sample_sound = "audio/efectos/mensaje.ogg"
 
 ## Mantener el cuadro de texto visible también durante las decisiones, para
 ## que el borde recortado de los sprites nunca quede al descubierto.
@@ -32,13 +33,20 @@ define gui.show_name = True
 
 ## Versión del juego.
 
-define config.version = "1.1"
+define config.version = "1.2"
 
 
 ## Texto situado en la pantalla 'Acerca de' del juego. Sitúa el texto entre
 ## comillas triples y deja una línea en blanco entre párrafos.
 
 define gui.about = _p("""
+José Lipian, la novela gráfica. Creado por SeguelStudios.
+
+Una historia del grupo en Temuco y sus alrededores: conversaciones, tallas internas y decisiones que cambian cómo termina la investigación.
+
+Incluye la precuela Lucho y una ruta alternativa en Labranza.
+
+Música original: Fabián Millalén (Fabinho), autor de las ocho canciones.
 """)
 
 
@@ -200,6 +208,12 @@ init python:
     ## Excluye los artefactos ya compilados y los archivos del repositorio,
     ## para que no se metan dentro de las builds.
     build.classify('dist/**', None)
+    build.classify('tests/**', None)
+    build.classify('game/saves/**', None)
+    build.classify('game/cache/**', None)
+    build.classify('respaldo-*/**', None)
+    build.classify('game/qa_*.rpy', None)
+    build.classify('game/qa_*.rpyc', None)
     build.classify('README.md', None)
     build.classify('icon.ico', None)
 

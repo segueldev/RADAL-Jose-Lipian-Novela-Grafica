@@ -1,0 +1,1 @@
+Pruebas de desarrollo para Ren’Py 8.5.3. Copia estos guiones a game SOLO en una copia separada del proyecto y ejecuta `renpy.sh /ruta/copia test --report-detailed`. Usan partidas de prueba en /tmp. No se incluyen en las descargas.

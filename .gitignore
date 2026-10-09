@@ -24,3 +24,8 @@
 /dialogue.tab
 /dialogue.txt
 /strings.json
+
+# Copias locales de seguridad y pruebas de desarrollo.
+/respaldo-*/
+/tests/
+/game/qa_*

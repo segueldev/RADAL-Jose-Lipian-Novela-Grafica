@@ -210,10 +210,32 @@ style input:
 
 screen choice(items):
     style_prefix "choice"
+    add Solid("#00000030")
 
-    vbox:
-        for i in items:
-            textbutton i.caption action i.action
+    if len(items) > 7:
+        frame:
+            xalign 0.5
+            ypos 135
+            xsize 1420
+            background "#111a22de"
+            padding (20, 16)
+            viewport:
+                id "decisiones_largas"
+                ysize 600
+                mousewheel True
+                draggable True
+                scrollbars "vertical"
+                vbox:
+                    xalign 0.5
+                    ypos 0
+                    yanchor 0.0
+                    spacing 10
+                    for indice, i in enumerate(items):
+                        textbutton i.caption action i.action id ("eleccion_" + str(indice))
+    else:
+        vbox:
+            for indice, i in enumerate(items):
+                textbutton i.caption action i.action id ("eleccion_" + str(indice))
 
 
 style choice_vbox is vbox
@@ -363,7 +385,37 @@ screen main_menu():
     ## Esto asegura que cualquier otra pantalla de menu es remplazada.
     tag menu
 
-    add gui.main_menu_background
+    add Transform("bg potrero", matrixcolor=TintMatrix("#b5c7a8") * BrightnessMatrix(-0.12))
+    add Solid("#10241a35")
+    add Transform("images/shakira.png", xysize=(710, 650), fit="contain") xpos 1170 ypos 365
+    add Transform("images/jose.png", crop=(0, 0, 1030, 1213), xysize=(760, 895)) xpos 540 ypos 280
+    text "Una yegua. Un solo destino.\nJosé Lipian · La novela gráfica\nBasada en hechos reales.":
+        xpos 690
+        ypos 75
+        size 34
+        color "#fff0d0"
+        outlines [(2, "#16281e", 0, 0)]
+    text "TEMUCO · PILLALLELBÚN · LABRANZA":
+        xpos 690
+        ypos 990
+        size 23
+        color "#fff0d0"
+        outlines [(1, "#16281e", 0, 0)]
+
+    hbox:
+        xpos 1390
+        ypos 205
+        spacing 10
+        for retrato, nombre in [("images/eventos/pablo_gafas.png", "Pablo"), ("images/diego.png", "Diego"), ("images/marcelo.png", "Marcelo"), ("images/fabian.png", "Fabián")]:
+            frame:
+                background Solid("#12271ad9")
+                padding (6, 8)
+                vbox:
+                    spacing 4
+                    fixed:
+                        xysize (106, 136)
+                        add Transform(retrato, xysize=(106, 136), fit="contain") xalign 0.5 yalign 1.0
+                    text nombre size 18 color "#fff0d0" xalign 0.5
 
     ## Panel lateral con la identidad del juego (blanco + verde).
     frame:
@@ -376,10 +428,9 @@ screen main_menu():
     vbox:
         style "mm_header"
 
-        text "RADAL":
-            style "mm_title"
+        add Transform("images/eventos/logo_radal.png", xysize=(180,180), fit="contain")
 
-        text "JOSÉ LIPIAN, LA NOVELA GRÁFICA":
+        text "JOSÉ LIPIAN\nLA NOVELA GRÁFICA":
             style "mm_subtitle"
 
         frame:
@@ -389,15 +440,29 @@ screen main_menu():
     vbox:
         style "mm_buttons"
 
-        textbutton "Comenzar" action Start() style "mm_button" text_style "mm_button_main_text"
+        textbutton "Comenzar" id "menu_comenzar" action Start() style "mm_button" text_style "mm_button_main_text"
+        button:
+            id "menu_lucho"
+            action Start("lucho_inicio")
+            style "mm_dlc_button"
+            hbox:
+                spacing 16
+                add Transform("images/eventos/lucho_liceo.png", xysize=(64, 82), fit="contain")
+                vbox:
+                    yalign 0.5
+                    spacing 3
+                    text "DLC: LUCHO" font "fonts/Bangers-Regular.ttf" size 35 color "#fff0d0" kerning 1.2
+                    text "Jugar la precuela" size 20 color "#e6bb6a"
+                    text "Una historia antes de RADAL" size 15 color "#c7d5c8"
 
         if renpy.newest_slot(r"[^_]"):
             textbutton "Continuar" action Continue() style "mm_button"
 
         textbutton "Cargar" action ShowMenu("load") style "mm_button"
-        textbutton "Opciones" action ShowMenu("preferences") style "mm_button"
-        textbutton "Acerca de" action ShowMenu("about") style "mm_button"
-        textbutton "Ayuda" action ShowMenu("help") style "mm_button"
+        textbutton "Los politécnicos" id "menu_personajes" action ShowMenu("personajes_radal") style "mm_button"
+        textbutton "Opciones" id "menu_opciones" action ShowMenu("preferences") style "mm_button"
+        textbutton "Acerca de" id "menu_acerca" action ShowMenu("about") style "mm_button"
+        textbutton "Ayuda" id "menu_ayuda" action ShowMenu("help") style "mm_button"
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
             textbutton "Salir" action Quit(confirm=True) style "mm_button"
@@ -408,67 +473,78 @@ screen main_menu():
     vbox:
         style "mm_footer"
 
-        text "Finales desbloqueados: [n_finales_menu] de 6":
+        text "Finales desbloqueados: [n_finales_menu] de 7":
             style "mm_finales"
 
-        text "Creado por SeguelStudios · v[config.version]":
+        text ("Lucho: completado" if persistent.lucho_completado else "Lucho: precuela disponible"):
+            style "mm_finales"
+
+        text "SEGUELSTUDIOS / V[config.version]":
             style "mm_credito"
 
 
 style mm_panel:
-    xsize 480
+    xsize 540
     yfill True
-    background Solid("#ffffffec")
+    background Solid("#12271af2")
 
 style mm_edge:
-    xpos 475
+    xpos 535
     xsize 5
     yfill True
-    background Solid("#336600")
+    background Solid("#e6bb6a")
 
 style mm_header:
     xpos 64
-    ypos 70
-    spacing 14
+    ypos 25
+    spacing 10
 
 style mm_title:
-    color "#336600"
-    size 96
+    color "#e6bb6a"
+    size 88
     bold True
 
 style mm_subtitle:
-    color "#6e756d"
-    size 19
-    bold True
+    font "fonts/Bangers-Regular.ttf"
+    kerning 1.2
+    color "#e6bb6a"
+    size 29
 
 style mm_divisor:
     xsize 84
-    ysize 5
-    background Solid("#336600")
+    ysize 4
+    background Solid("#e6bb6a")
     top_margin 6
 
 style mm_buttons:
     xpos 40
-    yalign 0.5
-    xsize 396
+    ypos 290
+    xsize 444
     spacing 4
 
 style mm_button is gui_button:
-    xsize 396
+    xsize 444
     xpadding 26
-    ypadding 15
+    ypadding 9
     background Solid("#ffffff00")
-    hover_background Solid("#3366001a")
+    hover_background Solid("#ffffff18")
+
+style mm_dlc_button is mm_button:
+    background Solid("#34513f")
+    hover_background Solid("#49694e")
+    padding (14, 10)
+    top_margin 8
+    bottom_margin 8
 
 style mm_button_text is gui_button_text:
-    size 36
-    color "#454b46"
-    hover_color "#336600"
+    size 31
+    color "#edf1e7"
+    hover_color "#e6bb6a"
     xalign 0.0
 
 ## La acción principal (nueva partida) siempre verde y en negrita.
 style mm_button_main_text is mm_button_text:
-    color "#336600"
+    color "#e6bb6a"
     bold True
 
 style mm_footer:
@@ -480,11 +556,13 @@ style mm_footer:
 style mm_finales:
     size 23
     bold True
-    color "#336600"
+    color "#e6bb6a"
 
 style mm_credito:
+    font "fonts/Bangers-Regular.ttf"
+    kerning 1.5
     size 19
-    color "#8b918a"
+    color "#afbeb1"
 
 
 ## Pantalla del menú del juego #################################################
@@ -839,7 +917,14 @@ screen preferences():
                     textbutton _("Tras elecciones") action Preference("after choices", "toggle")
                     textbutton _("Transiciones") action InvertSelected(Preference("transitions", "toggle"))
 
+                vbox:
+                    style_prefix "check"
+                    label _("Ambiente")
+                    textbutton _("Lluvia animada") action ToggleField(persistent, "lluvia_animada")
+
                 ## Aquí se pueden añadir 'vboxes' adicionales del tipo
+                    textbutton "Mostrar canción actual" action ToggleField(persistent, "aviso_musica_radal")
+
                 ## "radio_pref" o "check_pref" para nuevas preferencias.
 
             null height (4 * gui.pref_spacing)
@@ -1411,7 +1496,7 @@ screen nvl(dialogue, items=None):
 
         ## Presenta el menú, si lo hay. El menú puede ser presentado
         ## incorrectamente si 'config.narrator_menu' está ajustado a 'True'.
-        for i in items:
+        for indice, i in enumerate(items):
 
             textbutton i.caption:
                 action i.action
@@ -1703,3 +1788,26 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+
+screen personajes_radal():
+    tag menu
+    use game_menu("Los politécnicos", scroll="viewport"):
+        vbox:
+            spacing 16
+            text "Los de siempre, metidos en otra mala idea." size 26
+            grid 4 4:
+                spacing 16
+                for nombre, retrato in [("José Lipian", "images/jose.png"), ("Pablo", "images/eventos/pablo_gafas.png"), ("Diego", "images/diego.png"), ("Fabián", "images/fabian.png"), ("Marcelo", "images/marcelo.png"), ("Rubén", "images/ruben.png"), ("Maximiliano", "images/maxi.png"), ("Iván", "images/ivan.png"), ("Benjamín", "images/benjamin.png"), ("Luis · Lucho", "images/eventos/lucho_liceo.png"), ("Bastián", "images/bastian.png"), ("Shakira", "images/shakira.png"), ("Pequi · gata de Fabián", "images/eventos/pequi.png")]:
+                    frame:
+                        xsize 235
+                        background Solid("#173323")
+                        padding (10, 10)
+                        vbox:
+                            spacing 8
+                            add Transform(retrato, xysize=(215, 225), fit="contain")
+                            text nombre size 22 color "#fff0d0" xalign 0.5
+
+                null
+                null
+                null
