@@ -1,6 +1,18 @@
 # RADAL 1.2 — José Lipian, la novela gráfica
 
-Novela visual chilena de SeguelStudios, hecha con Ren’Py 8.5.3.
+**Juego gratuito de SeguelStudios, ambientado en Temuco, Chile, y sus alrededores.** Una yegua. Un solo destino. José Lipian, la novela gráfica, basada en hechos reales.
+
+Una novela visual con humor del sur, amistades, decisiones y situaciones que se van de las manos. Está escrita en **español chileno**, con modismos y tallas locales: está pensada principalmente para el público chileno, aunque cualquiera puede jugarla. Las anécdotas reales se mezclan con exageraciones y rutas ficticias de «¿Y si…?».
+
+La versión completa para **Windows, Linux y Android**, incluidos los **siete finales y el DLC precuela Lucho**, se puede descargar y jugar gratis.
+
+## Apoyo voluntario
+
+Si te gustó el juego y quieres apoyar a SeguelStudios, puedes enviar un aporte voluntario por **PayPal** al correo **seguelbenjamin374@yahoo.com**.
+
+**Donar es completamente opcional.** No necesitas pagar para descargar, jugar, acceder al DLC o desbloquear contenido. Comprueba el correo del destinatario antes de enviar tu aporte.
+
+Hecho con Ren’Py 8.5.3.
 
 ## Imágenes del juego
 
