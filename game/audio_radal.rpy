@@ -148,10 +148,10 @@ screen reloj_musica_radal():
 
 screen musica_actual_radal(titulo):
     zorder 15
-    if persistent.aviso_musica_radal and not main_menu and not renpy.get_screen("mapa_recorridos") and not renpy.get_screen("preferences") and not renpy.get_screen("save") and not renpy.get_screen("load") and not renpy.get_screen("history") and not renpy.get_screen("about") and not renpy.get_screen("help"):
+    if persistent.aviso_musica_radal and not main_menu and not renpy.get_screen("mapa_recorridos") and not renpy.get_screen("preferences") and not renpy.get_screen("save") and not renpy.get_screen("load") and not renpy.get_screen("history") and not renpy.get_screen("about") and not renpy.get_screen("help") and not (renpy.showing("martin") and renpy.get_screen("aviso_recuerda")):
         frame:
             xpos 24
-            ypos 140
+            ypos (24 if renpy.showing("martin") else 140)
             xsize 350
             padding (12,10)
             background Solid("#132627de")

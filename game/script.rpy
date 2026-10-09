@@ -238,8 +238,8 @@ image bastian  = sprite("images/bastian.png")
 image ruben    = sprite("images/ruben.png")
 image maxi     = sprite("images/maxi.png")
 image ivan     = sprite("images/ivan.png")
-image martin   = sprite("images/martin.png")
-image hector   = sprite("images/hector.png")
+image martin   = sprite(Crop((275, 94, 620, 776), "images/martin.png"))
+image hector   = sprite(Crop((600, 420, 1150, 1450), "images/hector.png"))
 image shakira  = sprite("images/shakira.png")
 image jeep     = sprite("images/jeep.png", alto=620)
 image perro1   = sprite("images/perro1.png", alto=500)
@@ -392,7 +392,7 @@ label start:
 
     python:
         nombre = renpy.input("¿Cómo te llamas?", length=18)
-        nombre = renpy.escape(nombre.strip())
+        nombre = nombre.strip().replace("{", "{{")
         if not nombre:
             nombre = "Kabro"
 
@@ -1576,7 +1576,7 @@ label liceo:
     show diego at left with dissolve
     show benjamin at right with dissolve
 
-    "Liceo Politécnico de Pueblo Nuevo. Aquí se conocieron todos. Tú llegaste después, como personaje descargable."
+    "Liceo Politécnico de Pueblo Nuevo. Varios del grupo compartieron segundo medio antes de irse a sus especialidades. Tú llegaste después, al INACAP."
     diego "Este lugar tiene historia. Y por historia quiero decir... al profe Martín."
     benjamin "El Shen Shen. Que en paz descanse su credibilidad."
     mc "¿El Shen Shen?"
@@ -1596,11 +1596,12 @@ label liceo:
     martin "...porque cuando era estudiante, COMO USTEDES, gané la competencia de Huawei del INACAP. Me mandaron a la final MUNDIAL. A China. Y quedé SEGUNDO."
     show benjamin at right with dissolve
     benjamin "(Ayer dijo que tercero.)"
+    show martin at left with dissolve
 
     menu:
         "Según lo que cuentan, yo le habría creído.":
             $ apoyo += 1
-            $ recuerda("El profe Martín", "El profe Martín lo recordará. En otra historia.")
+            $ recuerda("Diego", "Diego cachó que prefieres escuchar antes de juzgar.")
         "Yo habría preguntado en qué puesto quedó.":
             $ drama += 1
             $ broma_benjamin += 1
@@ -1610,6 +1611,7 @@ label liceo:
             "Una voz desde la ventana: «¡CUATRO POR CUATRO!»"
 
     "En el recuerdo de los cabros, Marcelo le susurra a Benjamín lo que sabía:"
+    show martin at center with dissolve
     show marcelo at left with dissolve
     marcelo "A China sí fue. Eso es verdad. Ganó la competencia del INACAP siendo estudiante y lo mandaron a la final mundial."
     benjamin "El problema es el puesto. Segundo, dice. A veces tercero. Depende del día."
@@ -1672,7 +1674,7 @@ label liceo:
     show diego at left with dissolve
     show benjamin at right with dissolve
     diego "Buenos tiempos."
-    benjamin "El Shen Shen sigue dando clases. Sigue yendo a 'China'."
+    benjamin "El Shen Shen sigue dando clases. El viaje a China lo cuenta como si hubiera vuelto ayer."
 
     "Suena el celular de Benjamín. Contesta."
     benjamin "¿Aló? ... ¿Nico? ... ¿Cómo que Santiago? ... ¿No que ibas a Lonquimay? ... Ya. Cuídate, wn."
@@ -1682,6 +1684,7 @@ label liceo:
     benjamin "Lonquimay quedó en el camino. Nadie sabe qué pasó entre medio."
     mc "(Casi cuatro mil suscriptores viendo un Jeep. Este país es infinito.)"
 
+    call conversacion_martin_hector
     jump hub
 
 
@@ -2902,9 +2905,10 @@ label creditos:
     "...a Bastián dos veces, porque habla tan poco que hay que nombrarlo por él..."
     "...a Iván Garrido del 4F, que esquivó la milicia con un solo PDF..."
     "...y a Diego, primer año eterno, a quien el ejército se lo perdió por no tener un sicólogo con criterio..."
-    "...al profe Martín, que algún día llegará de verdad a Shenzhen..."
+    "...al profe Martín, que sí llegó a Shenzhen; el puesto todavía cambia según quién pregunte..."
     "...a Héctor y su Suzuki Jeep cuatro por cuatro..."
     "...y a Shakira, dondequiera que esté. Probablemente comiendo zanahorias. Esperamos."
+    call balance_profes
     "Gracias por jugar."
 
     return

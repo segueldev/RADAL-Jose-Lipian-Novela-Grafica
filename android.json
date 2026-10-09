@@ -8,7 +8,7 @@
     "include_sqlite": false,
     "layout": null,
     "name": "RADAL \u00b7 Jos\u00e9 Lipian",
-    "numeric_version": 12,
+    "numeric_version": 13,
     "orientation": "sensorLandscape",
     "package": "cl.seguelstudios.radal",
     "permissions": [],

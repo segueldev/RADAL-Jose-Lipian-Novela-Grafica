@@ -23,6 +23,10 @@ label cuaderno:
             "Rubén: vio una yegua cerca de la Shell los domingos."
             if secreto_ruben:
                 "Le prometiste no dar su nombre."
+    if consejo_martin:
+        "Consejo de Martín: separar lo que viste, lo que te contaron y lo que sigue siendo una suposición."
+    if grabacion_hector == "permiso":
+        "Héctor: pedir permiso antes de grabar o publicar a los demás; mostrarles el resultado."
     if decisiones_clave:
         "También anotaste lo que cambió por tus decisiones:"
         python:

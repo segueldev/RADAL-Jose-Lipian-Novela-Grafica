@@ -86,3 +86,7 @@ Creado por SeguelStudios. Música original: «Josep Lipian Iceberg», Fabián Mi
 Una instalación sin partidas previas empieza con **0 de 7 finales** y **Lucho sin completar**. La descarga no contiene partidas ni progreso de las pruebas. Una actualización conserva el progreso existente.
 
 Tipografía del menú: Bangers, de Vernon Adams, distribuida con su licencia SIL Open Font License en `game/fonts/Bangers-OFL.txt`.
+
+## Corrección de la versión 1.2
+
+Corregido el bloqueo al confirmar el nombre. Visita ampliada con Martín y Héctor, decisiones con seguimiento y encuadres ajustados. Windows, Linux y Android reconstruidos como 1.2. [Pruebas y límites](docs/QA-CORRECCION-v1.2.md).

@@ -235,7 +235,10 @@ screen choice(items):
     else:
         vbox:
             for indice, i in enumerate(items):
-                textbutton i.caption action i.action id ("eleccion_" + str(indice))
+                if renpy.showing("martin"):
+                    textbutton i.caption action i.action id ("eleccion_" + str(indice)) xsize 1000
+                else:
+                    textbutton i.caption action i.action id ("eleccion_" + str(indice))
 
 
 style choice_vbox is vbox
